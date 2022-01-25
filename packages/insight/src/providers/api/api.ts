@@ -18,8 +18,7 @@ const CurrentEnv = process.env.ENV || 'dev';
 
 const EnvApiHosts: { [env: string]: { [chain: string]: string } } = {
   prod: {
-    default: 'https://api.bitcore.io/api',
-    ETH: 'https://api-eth.bitcore.io/api'
+    BTF: 'https://exp-api.sandurchin.app/api',
   },
   dev: { default: '/api' }
 };
@@ -39,10 +38,7 @@ export class ApiProvider {
   };
 
   public ratesAPI = {
-    btc: 'https://bitpay.com/api/rates',
-    bch: 'https://bitpay.com/api/rates/bch',
-    doge: 'https://bitpay.com/api/rates/doge',
-    eth: 'https://bitpay.com/api/rates/eth'
+    btf: 'https://exp-api.sandurchin.app/api/rates/btf'
   };
 
   public bwsUrl = {

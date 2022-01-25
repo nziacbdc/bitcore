@@ -1,1 +1,1 @@
-export const UTXO_CHAINS = ['BTC', 'BCH', 'DOGE', 'LTC'];
+export const UTXO_CHAINS = ['BTF'];

@@ -50,6 +50,7 @@ export class AddressPage {
 
   public ionViewWillLoad(): void {
     this.events.subscribe('CoinList', (d: any) => {
+      console.log(d);
       this.nroTransactions = d.length;
     });
 

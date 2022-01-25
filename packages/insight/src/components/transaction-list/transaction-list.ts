@@ -7,7 +7,6 @@ import { ChainNetwork } from '../../providers/api/api';
 import { BlocksProvider } from '../../providers/blocks/blocks';
 import {
   ApiEthTx,
-  AppEthCoin,
   TxsProvider
 } from '../../providers/transactions/transactions';
 @Component({
@@ -35,23 +34,13 @@ export class TransactionListComponent implements OnInit {
     private addrProvider: AddressProvider,
     private blocksProvider: BlocksProvider,
     private events: Events
-  ) {}
+  ) { }
 
   public ngOnInit(): void {
     if (this.transactions && this.transactions.length === 0) {
       if (this.queryType === 'blockHash') {
-        if (UTXO_CHAINS.includes(this.chainNetwork.chain)) {
-          this.fetchBlockTxCoinInfo(1);
-        } else {
-          this.txProvider
-            .getTxs(this.chainNetwork, { blockHash: this.queryValue })
-            .subscribe(txs => {
-              _.forEach(txs, (tx: ApiEthTx) => {
-                this.transactions.push(this.txProvider.toEthAppTx(tx));
-              });
-            });
-          this.loading = false;
-        }
+        console.log(`this.queryType === 'blockHash'`);
+        this.fetchBlockTxCoinInfo(1);
       } else if (this.queryType === 'address') {
         const txs: any = [];
 
@@ -111,6 +100,7 @@ export class TransactionListComponent implements OnInit {
     });
   }
 
+  /*   
   public populateTxsForBlock(txidCoins) {
     _.forEach(txidCoins.txids, (txid: any) => {
       const tx: any = {};
@@ -130,12 +120,34 @@ export class TransactionListComponent implements OnInit {
 
       this.transactions.push(tx);
     });
+  } 
+  */
+
+  public populateTxsForBlock(txidCoins) {
+    console.log('populateTxsForBlock');
+    console.log(txidCoins);
+    _.forEach(txidCoins, (txid: any) => {
+      console.log('foreach');
+      const tx: any = {};
+      tx.txid = txid.txid;
+      tx.fee = txid.fee;
+      tx.blockheight = txid.blockHeight;
+      tx.blocktime = new Date(txid.blockTime).getTime() / 1000;
+      tx.time = this.blocktime
+        ? this.blocktime
+        : new Date(txid.blockTime).getTime() / 1000;
+      this.transactions.push(tx);
+      console.log(this.transactions);
+    });
   }
 
   public fetchBlockTxCoinInfo(pageNum) {
+    console.log('fetchBlockTxCoinInfo');
+    console.log(this.queryValue);
     this.blocksProvider
       .getCoinsForBlockHash(this.queryValue, this.chainNetwork, 100, pageNum)
       .subscribe(txidCoins => {
+        console.log(txidCoins);
         this.populateTxsForBlock(txidCoins);
         this.loading = false;
         if (txidCoins.next !== '') {

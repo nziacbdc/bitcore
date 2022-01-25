@@ -18,6 +18,7 @@ import { TxsProvider } from '../../providers/transactions/transactions';
   templateUrl: 'block-detail.html'
 })
 export class BlockDetailPage {
+  public appUrl: string;
   public loading = true;
   public errorMessage: string;
   public confirmations: number;
@@ -45,6 +46,7 @@ export class BlockDetailPage {
       chain,
       network
     };
+    this.appUrl = apiProvider.getUrl(this.chainNetwork);
     this.apiProvider.changeNetwork(this.chainNetwork);
     this.currencyProvider.setCurrency(this.chainNetwork);
     this.priceProvider.setCurrency();
@@ -53,13 +55,7 @@ export class BlockDetailPage {
   ionViewDidEnter() {
     this.blocksProvider.getBlock(this.blockHash, this.chainNetwork).subscribe(
       response => {
-        let block;
-        if (UTXO_CHAINS.includes(this.chainNetwork.chain)) {
-          block = this.blocksProvider.toUtxoCoinAppBlock(response);
-        }
-        if (this.chainNetwork.chain === 'ETH') {
-          block = this.blocksProvider.toEthAppBlock(response);
-        }
+        const block = this.blocksProvider.toAppBlock(response);
         this.block = block;
         this.txProvider
           .getConfirmations(this.block.height, this.chainNetwork)
@@ -84,6 +80,14 @@ export class BlockDetailPage {
   public goToNextBlock(): void {
     this.redirProvider.redir('block-detail', {
       blockHash: this.block.nextblockhash,
+      chain: this.chainNetwork.chain,
+      network: this.chainNetwork.network
+    });
+  }
+
+  public goToAddress(addrStr: string): void {
+    this.redirProvider.redir('address', {
+      addrStr,
       chain: this.chainNetwork.chain,
       network: this.chainNetwork.network
     });

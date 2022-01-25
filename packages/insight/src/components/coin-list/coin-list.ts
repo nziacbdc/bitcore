@@ -45,16 +45,7 @@ export class CoinListComponent implements OnInit {
         .getAddressActivity(this.addrStr, this.chainNetwork)
         .subscribe(
           data => {
-            const toAppCoin: any =
-              this.chainNetwork.chain !== 'ETH'
-                ? this.txsProvider.toAppCoin
-                : this.txsProvider.toAppEthCoin;
-            const formattedData = data.map(toAppCoin);
-            this.txs =
-              this.chainNetwork.chain !== 'ETH'
-                ? this.processData(formattedData)
-                : formattedData;
-            this.txs = _.sortBy(this.txs, ['height']).reverse(); // newest txs by default
+            this.txs = _.sortBy(data.map(this.txsProvider.toAppCoin), ['height']).reverse();
             this.events.publish('CoinList', { length: this.txs.length });
             this.showTransactions = true;
             this.loading = false;
@@ -82,16 +73,6 @@ export class CoinListComponent implements OnInit {
     this.mostRecentOrderSelected = order === 'Most Recent';
   }
 
-  processData(data) {
-    const txs = [];
-    data.forEach(tx => {
-      const { mintHeight, mintTxid, value, spentHeight, spentTxid } = tx;
-      txs.push({ height: spentHeight, spentTxid, value });
-      txs.push({ height: mintHeight, mintTxid, value });
-    });
-
-    return txs;
-  }
 
   public loadMore(infiniteScroll) {
     this.limit += this.chunkSize;

@@ -55,7 +55,7 @@ export class HeadNavComponent implements OnInit {
 
   public goHome(chainNetwork?): void {
     this.navCtrl.setRoot('home', {
-      chain: chainNetwork ? chainNetwork.chain : 'ALL',
+      chain: chainNetwork ? chainNetwork.chain : 'BTF',
       network: chainNetwork ? chainNetwork.network : 'mainnet'
     });
   }
@@ -237,5 +237,33 @@ export class HeadNavComponent implements OnInit {
 
   public toggleSearch(): void {
     this.showSearch = !this.showSearch;
+  }
+
+  public navigateToMain() { 
+    return this.redirProvider.redir('home', {
+      chain: this.chainNetwork.chain,
+      network: this.chainNetwork.network
+    });
+  }
+
+  public navigateToMoney() { 
+    return this.redirProvider.redir('money', {
+      chain: this.chainNetwork.chain,
+      network: this.chainNetwork.network
+    });
+  }
+  
+  public navigateToRoles() { 
+    return this.redirProvider.redir('roles', {
+      chain: this.chainNetwork.chain,
+      network: this.chainNetwork.network
+    });
+  }
+
+  public navigateToConsensus() { 
+    return this.redirProvider.redir('consensus', {
+      chain: this.chainNetwork.chain,
+      network: this.chainNetwork.network
+    });
   }
 }

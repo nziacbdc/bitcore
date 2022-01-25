@@ -1,15 +1,20 @@
 <ion-list no-lines>
+  <ion-item-divider>
+    Blockchain
+  </ion-item-divider>
   <ion-row>
     <ion-item (click)="changeExplorer(chainNetwork)" *ngFor="let chainNetwork of availableNetworks">
       <ion-avatar item-start>
-        <img *ngIf="chainNetwork.network === 'mainnet' && chainNetwork.chain !=='ALL'" src="assets/img/currency_logos/{{ chainNetwork.chain.toLowerCase() }}.svg" class="logo" alt="{{ chainNetwork.chain }}"/>
-        <img *ngIf=" chainNetwork.network !=='mainnet' && chainNetwork.chain==='BTC'" src=" assets/img/btcicon-testnet.svg" class="logo"  alt="{{ chainNetwork.chain }}"/>
-        <img *ngIf="chainNetwork.network !== 'mainnet' && chainNetwork.chain==='BCH'" src="assets/img/bchicon-testnet.svg" class="logo" alt="{{ chainNetwork.chain }}"/>
-        <img *ngIf="chainNetwork.network !== 'mainnet' && chainNetwork.chain==='DOGE'" src="assets/img/doge-logo-testnet.svg" class="logo" alt="{{ chainNetwork.chain }}"/>
-        <img *ngIf="chainNetwork.network !== 'mainnet' && chainNetwork.chain==='LTC'" src="assets/img/ltc-testnet.svg" class="logo" alt="{{ chainNetwork.chain }}"/>
-        <img [ngClass]="{'secondary': chainNetwork.network ==='testnet'}" *ngIf="chainNetwork.network !== 'mainnet' && chainNetwork.chain==='ETH'" src="assets/img/currency_logos/eth.svg" class="logo" alt="{{ chainNetwork.chain }}"/>
+        <img *ngIf="chainNetwork.chain === 'BTF'" src=" assets/img/btcicon-testnet.svg" class="logo"  alt="{{ chainNetwork.chain }}"/>
       </ion-avatar>
-      <ion-label color="dark" *ngIf="chainNetwork.chain !== 'ALL'">
+      <div class="item-inner">
+        <div class="input-wrapper">
+          <ion-label color="dark" class="label label-md label-md-dark" id="lbl-43">
+            <button ion-button> BTF Mainnet</button>
+          </ion-label>
+        </div>
+      </div>
+      <ion-label color="dark" *ngIf="chainNetwork.chain === 'BTF'">
         {{ chainNetwork.chain }} <small class="pill"> {{ chainNetwork.network }}</small>
       </ion-label>
       <ion-label color="dark" *ngIf="chainNetwork.chain === 'ALL'">

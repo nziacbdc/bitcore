@@ -10,6 +10,7 @@ import { CurrencyProvider } from '../providers/currency/currency';
 import { DefaultProvider } from '../providers/default/default';
 import { HttpErrorInterceptor } from '../providers/error-handler/error-handler';
 import { Logger } from '../providers/logger/logger';
+import { MoneyProvider } from '../providers/money/money';
 import { PriceProvider } from '../providers/price/price';
 import { RedirProvider } from '../providers/redir/redir';
 import { SearchProvider } from '../providers/search/search';

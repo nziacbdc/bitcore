@@ -1,10 +1,8 @@
 import { Component, Input, NgZone, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { UTXO_CHAINS } from '../../constants';
 import { ChainNetwork } from '../../providers/api/api';
 import {
-  ApiEthBlock,
-  ApiUtxoCoinBlock,
+  ApiBlock,
   AppBlock,
   BlocksProvider
 } from '../../providers/blocks/blocks';
@@ -62,13 +60,8 @@ export class LatestBlocksComponent implements OnInit, OnDestroy {
         .subscribe(
           response => {
             const blocks = response.map(
-              (block: ApiEthBlock & ApiUtxoCoinBlock) => {
-                if (UTXO_CHAINS.includes(this.chainNetwork.chain)) {
-                  return this.blocksProvider.toUtxoCoinAppBlock(block);
-                }
-                if (this.chainNetwork.chain === 'ETH') {
-                  return this.blocksProvider.toEthAppBlock(block);
-                }
+              (block: ApiBlock) => {
+                return this.blocksProvider.toAppBlock(block);
               }
             );
             this.blocks = blocks;
@@ -96,18 +89,8 @@ export class LatestBlocksComponent implements OnInit, OnDestroy {
       .subscribe(
         response => {
           const blocks = response.map(
-            (block: ApiEthBlock & ApiUtxoCoinBlock) => {
-              if (
-                this.chainNetwork.chain === 'BTC' ||
-                this.chainNetwork.chain === 'BCH' ||
-                this.chainNetwork.chain === 'LTC' ||
-                this.chainNetwork.chain === 'DOGE'
-              ) {
-                return this.blocksProvider.toUtxoCoinAppBlock(block);
-              }
-              if (this.chainNetwork.chain === 'ETH') {
-                return this.blocksProvider.toEthAppBlock(block);
-              }
+            (block: ApiBlock) => {
+              return this.blocksProvider.toAppBlock(block);
             }
           );
           this.blocks = this.blocks.concat(blocks);

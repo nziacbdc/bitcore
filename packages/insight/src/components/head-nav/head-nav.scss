@@ -131,3 +131,48 @@ head-nav {
   padding-right: 7px;
   padding-left: 4px;
 }
+
+.childbut {
+  background-color: #2fa4d7;
+}
+
+.toolbar-content2 {
+  width: 100%;
+  background-color:#8dc429;
+}
+
+.toolbar-content2 > div {
+  margin: auto;
+  width: 75%;
+  display: grid;
+  grid-template-columns: 25% 25% 25% 25%!important;
+  justify-items: stretch;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+  -ms-flex-align: center;
+  align-items: center;
+}
+
+.toolbar-content2 > .rewidthbar {
+  width: 50%;
+  grid-template-columns: 50% 50%!important;
+}
+
+.reduceBy50 {
+  width: 50%!important;
+}
+
+.clearBg {
+  background-color:unset!important;
+}
+
+.whiteinput {
+  color: #fff!important;
+  background-color: #7cad23!important;
+}
+
+::placeholder {
+  font-style: italic;
+  opacity: 60%;
+  color: #fff!important;
+}
